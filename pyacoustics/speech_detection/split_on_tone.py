@@ -66,9 +66,11 @@ def splitFileOnToneWindow(pitchList, timeStep, toneFrequency,
     toneFrequency = int(round(toneFrequency, -1))
     
     roundedPitchList = [int(round(val, -1)) for val in pitchList]
+    print(roundedPitchList)
     codedPitchList = _homogenizeListWindow(roundedPitchList, toneFrequency, windowSize)
-    
+    print(codedPitchList)
     compressedList = sequences.compressList(codedPitchList)
+    print(compressedList)
     timeDict = sequences.compressedListTransform(compressedList,
                                                  1.0/timeStep,
                                                  eventDurationThreshold)
