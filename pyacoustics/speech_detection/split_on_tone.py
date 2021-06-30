@@ -2,6 +2,8 @@
 Created on Sep 6, 2014
 
 @author: tmahrt
+
+@updated: ioakley - add a window clumsily to the split freqeuncy. 
 '''
 
 import os
