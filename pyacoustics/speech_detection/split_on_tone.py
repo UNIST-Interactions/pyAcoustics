@@ -49,6 +49,7 @@ def _homogenizeListWindow(dataList, toneFrequency, windowSize):
     for val in dataList:
         print(val, toneFrequency, windowSize, toneFrequency-windowSize, toneFrequency+windowSize)
         if (val >= toneFrequency-windowSize) and (val <= toneFrequency+windowSize):
+            print("beep")
             val = BEEP
         elif val == minVal:
             val = SILENCE
