@@ -36,6 +36,51 @@ def _homogenizeList(dataList, toneFrequency):
     return retDataList
 
 
+def _homogenizeList(dataList, toneFrequency, windowSize):
+    '''
+    Discritizes pitch values into one of three categories
+    '''
+    
+    minVal = min(dataList)
+    
+    retDataList = []
+    for val in dataList:
+        if (val >= toneFrequency-windowSize) and (val <= toneFrequency+windowSize):
+            val = BEEP
+        elif val == minVal:
+            val = SILENCE
+        else:
+            val = SPEECH
+        retDataList.append(val)
+        
+    return retDataList
+
+
+def splitFileOnTone(pitchList, timeStep, toneFrequency,
+                    eventDurationThreshold, windowSize):
+    '''
+    Splits files by pure tones
+    '''
+    toneFrequency = int(round(toneFrequency, -1))
+    
+    roundedPitchList = [int(round(val, -1)) for val in pitchList]
+    codedPitchList = _homogenizeList(roundedPitchList, toneFrequency, windowSize)
+    
+    compressedList = sequences.compressList(codedPitchList)
+    timeDict = sequences.compressedListTransform(compressedList,
+                                                 1.0/timeStep,
+                                                 eventDurationThreshold)
+    
+    # Fill in with empty lists if it didn't appear in the dataset
+    # (eg no beeps were detected or no speech occurred)
+    for key in [BEEP, SPEECH, SILENCE]:
+        if key not in timeDict:
+            timeDict[key] = []
+
+    return timeDict
+
+
+
 def splitFileOnTone(pitchList, timeStep, toneFrequency,
                     eventDurationThreshold):
     '''
