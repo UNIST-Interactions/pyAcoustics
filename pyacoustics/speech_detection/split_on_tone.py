@@ -71,10 +71,11 @@ def splitFileOnToneWindow(pitchList, timeStep, toneFrequency,
     codedPitchList = _homogenizeListWindow(roundedPitchList, toneFrequency, windowSize)
     
     compressedList = sequences.compressList(codedPitchList)
+    print(compressedList)
     timeDict = sequences.compressedListTransform(compressedList,
                                                  1.0/timeStep,
                                                  eventDurationThreshold)
-    
+    print(timeDict)
     # Fill in with empty lists if it didn't appear in the dataset
     # (eg no beeps were detected or no speech occurred)
     for key in [BEEP, SPEECH, SILENCE]:
