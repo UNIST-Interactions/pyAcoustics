@@ -36,7 +36,7 @@ def _homogenizeList(dataList, toneFrequency):
     return retDataList
 
 
-def _homogenizeList(dataList, toneFrequency, windowSize):
+def _homogenizeListWindow(dataList, toneFrequency, windowSize):
     '''
     Discritizes pitch values into one of three categories
     '''
@@ -56,7 +56,7 @@ def _homogenizeList(dataList, toneFrequency, windowSize):
     return retDataList
 
 
-def splitFileOnTone(pitchList, timeStep, toneFrequency,
+def splitFileOnToneWindow(pitchList, timeStep, toneFrequency,
                     eventDurationThreshold, windowSize):
     '''
     Splits files by pure tones
@@ -64,7 +64,7 @@ def splitFileOnTone(pitchList, timeStep, toneFrequency,
     toneFrequency = int(round(toneFrequency, -1))
     
     roundedPitchList = [int(round(val, -1)) for val in pitchList]
-    codedPitchList = _homogenizeList(roundedPitchList, toneFrequency, windowSize)
+    codedPitchList = splitFileOnToneWindow(roundedPitchList, toneFrequency, windowSize)
     
     compressedList = sequences.compressList(codedPitchList)
     timeDict = sequences.compressedListTransform(compressedList,
